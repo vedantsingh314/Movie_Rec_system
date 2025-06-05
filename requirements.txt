@@ -1,45 +1,39 @@
-altair==5.5.0
-attrs==25.3.0
-beautifulsoup4==4.13.4
-blinker==1.9.0
-cachetools==5.5.2
-certifi==2025.1.31
-charset-normalizer==3.4.1
-click==8.1.8
-colorama==0.4.6
-filelock==3.18.0
-gdown
-git-filter-repo==2.47.0
-gitdb==4.0.12
-GitPython==3.1.44
-idna==3.10
-Jinja2==3.1.6
-jsonschema==4.23.0
-jsonschema-specifications==2024.10.1
-MarkupSafe==3.0.2
-narwhals==1.32.0
-numpy==2.0.2
-packaging==24.2
-pandas==2.2.3
-pillow==11.1.0
-protobuf==3.20.3
-pyarrow==19.0.1
-pydeck==0.9.1
-PySocks==1.7.1
-python-dateutil==2.9.0.post0
-pytz==2025.1
-referencing==0.36.2
-requests==2.32.3
-rpds-py==0.23.1
-six==1.17.0
-smmap==5.0.2
-soupsieve==2.7
-streamlit==1.43.2
-tenacity==9.0.0
-toml==0.10.2
-tornado==6.4.2
-tqdm==4.67.1
-typing_extensions==4.12.2
-tzdata==2025.2
-urllib3==2.3.0
-watchdog==6.0.0
+# Core App Framework
+streamlit>=1.45.0
+
+# Data Handling
+pandas>=2.2.0
+numpy>=2.0.0
+scikit-learn>=1.6.0
+joblib>=1.4.0
+
+# Visualization
+matplotlib>=3.9.0
+seaborn>=0.13.0
+pydeck>=0.9.0
+altair>=5.2.0
+
+# Web API and Downloads
+requests>=2.32.0
+gdown>=5.2.0
+
+# Utility & Helpers
+tqdm>=4.66.0
+python-dateutil>=2.9.0
+packaging>=24.0
+
+# System and Monitoring (optional, but safe)
+watchdog>=6.0.0
+pillow>=11.0.0
+
+# HTML parsing (if you scrape or use `bs4`)
+beautifulsoup4>=4.13.0
+soupsieve>=2.5
+
+# Compatibility and Debugging
+typing_extensions>=4.11.0
+filelock>=3.12.0
+urllib3>=2.0.0
+certifi>=2025.4.0
+charset-normalizer>=3.3.0
+idna>=3.6
