@@ -5,8 +5,9 @@ import base64
 import time
 from urllib.parse import quote_plus
 import concurrent.futures
+import os
 
-# 1) SETTING THE FULL SCREEN BACKGROUND IMAGE
+# --- 1) SETTING THE FULL SCREEN BACKGROUND IMAGE ---
 def set_bg_local(image_file):
     with open(image_file, "rb") as file:
         encoded_string = base64.b64encode(file.read()).decode()
@@ -23,12 +24,26 @@ def set_bg_local(image_file):
 
 set_bg_local("background.jpg")  # Ensure "background.jpg" is in the same folder
 
-# 2) LOAD MOVIE DATA
+# --- 2) DOWNLOAD simi.pkl FROM GOOGLE DRIVE IF NEEDED ---
+def download_from_gdrive(file_id, dest_path):
+    import gdown
+    if not os.path.exists(dest_path):
+        with st.spinner('Downloading similarity matrix (simi.pkl)...'):
+            url = f'https://drive.google.com/uc?id={file_id}'
+            gdown.download(url, dest_path, quiet=False)
+            st.success('Downloaded simi.pkl!')
+
+# Google Drive file ID for your simi.pkl
+simi_file_id = "1TMhZQHjBet3f1szAaptZ9SMKcVo5sKnV"
+simi_path = "simi.pkl"
+download_from_gdrive(simi_file_id, simi_path)
+
+# --- 3) LOAD MOVIE DATA ---
 movies = pickle.load(open('mov.pkl', 'rb'))
-simi = pickle.load(open('simi.pkl', 'rb'))
+simi = pickle.load(open(simi_path, 'rb'))
 mov_list = movies['title'].values
 
-# 3) GLOBAL STYLES (HIGH CONTRAST FOR DARK BG)
+# --- 4) GLOBAL STYLES (HIGH CONTRAST FOR DARK BG) ---
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
@@ -120,7 +135,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 4) MAIN INTERFACE
+# --- 5) MAIN INTERFACE ---
 st.markdown("<h1 class='main-title'>🎬 Movie Recommender System</h1>", unsafe_allow_html=True)
 
 option = st.selectbox(
@@ -130,7 +145,7 @@ option = st.selectbox(
     format_func=lambda x: f"🍿 {x}",
 )
 
-# 5) HELPER FUNCTIONS (NO CACHE, PARALLELIZED)
+# --- 6) HELPER FUNCTIONS (NO CACHE, PARALLELIZED) ---
 def fetchpos_fast(mov_id, retries=3, delay=0.2):
     url = f'https://api.themoviedb.org/3/movie/{mov_id}?api_key=2a41f9b3c327106788d96924b3c0349f&language=en-US'
     for attempt in range(retries):
@@ -165,7 +180,7 @@ def recommend_fast(movie):
 
     return rec_mov, recpos
 
-# 6) RECOMMEND BUTTON & RESULTS
+# --- 7) RECOMMEND BUTTON & RESULTS ---
 placeholder_url = "https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png"
 
 if st.button('🔍 Recommend Movies'):
@@ -192,7 +207,7 @@ if st.button('🔍 Recommend Movies'):
                     unsafe_allow_html=True
                 )
 
-# 7) OPTIONAL: FOOTER OR BADGE
+# --- 8) OPTIONAL: FOOTER OR BADGE ---
 st.markdown(
     """
     <div style='text-align:center; margin-top:32px;'>
