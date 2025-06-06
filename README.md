@@ -16,3 +16,5 @@ Tech Stack
 * Backend: Python
 * Libraries: Pandas, scikit-learn, requests
 * Data Source: TMDB (The Movie Database) API for fetching posters and metadata
+
+For Live Demo:https://movierecsystem51.streamlit.app/
